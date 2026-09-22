@@ -1,0 +1,5 @@
+package com.buildasset.equipment.repository;
+
+public class EquipmentRepository {
+
+}

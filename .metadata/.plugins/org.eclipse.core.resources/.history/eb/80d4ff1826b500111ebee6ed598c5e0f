@@ -1,0 +1,5 @@
+package com.buildasset.rental.repository;
+
+public class RentalRepository {
+
+}

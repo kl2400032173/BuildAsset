@@ -1,0 +1,59 @@
+package com.buildasset.equipment.service;
+
+import com.buildasset.equipment.model.Equipment;
+import com.buildasset.equipment.repository.EquipmentRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class EquipmentService {
+
+    private final EquipmentRepository repository;
+
+    public EquipmentService(EquipmentRepository repository) {
+        this.repository = repository;
+    }
+
+    public Equipment create(Equipment equipment) {
+        if (equipment.getStatus() == null || equipment.getStatus().isBlank()) {
+            equipment.setStatus("AVAILABLE");
+        }
+
+        return repository.save(equipment);
+    }
+
+    public List<Equipment> getAll() {
+        return repository.findAll();
+    }
+
+    public Equipment getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Equipment not found: " + id));
+    }
+
+    public Equipment update(Long id, Equipment updated) {
+
+        Equipment existing = getById(id);
+
+        existing.setEquipmentCode(updated.getEquipmentCode());
+        existing.setName(updated.getName());
+        existing.setCategory(updated.getCategory());
+        existing.setManufacturer(updated.getManufacturer());
+        existing.setModel(updated.getModel());
+        existing.setDailyRate(updated.getDailyRate());
+        existing.setLocation(updated.getLocation());
+        existing.setStatus(updated.getStatus());
+        existing.setLastMaintenanceDate(
+                updated.getLastMaintenanceDate());
+        existing.setNextMaintenanceDate(
+                updated.getNextMaintenanceDate());
+
+        return repository.save(existing);
+    }
+
+    public void delete(Long id) {
+        Equipment equipment = getById(id);
+        repository.delete(equipment);
+    }

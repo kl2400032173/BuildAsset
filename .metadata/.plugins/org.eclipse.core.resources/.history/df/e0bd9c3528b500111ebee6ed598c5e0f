@@ -1,0 +1,5 @@
+package com.buildasset.dispatch.repository;
+
+public class DispatchRepository {
+
+}
